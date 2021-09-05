@@ -1,0 +1,9 @@
+{
+  "name": "node-microservice",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:fastup-kit/node-microservice.git",
+  "author": "luchanso <luchansodev@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
