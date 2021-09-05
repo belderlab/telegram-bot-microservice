@@ -5,5 +5,8 @@
   "repository": "git@github.com:fastup-kit/node-microservice.git",
   "author": "luchanso <luchansodev@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "typescript": "4.3.5"
+  }
 }
