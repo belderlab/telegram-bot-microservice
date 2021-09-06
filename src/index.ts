@@ -3,8 +3,8 @@ import { authorization } from './middleware/authorization';
 import { datasources } from './middleware/datasources';
 import { routing } from './middleware/routing';
 import { welcome } from './middleware/welcome';
+import { log } from './middleware/log';
 import dotenv from 'dotenv';
-import { log } from 'console';
 
 dotenv.config();
 
