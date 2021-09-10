@@ -1,10 +1,12 @@
-import { Context } from "telegraf";
-import { Update } from "typegram";
+import { Handler } from "../types";
 
-export const log = async (ctx: Context<Update>, next: () => Promise<void>) => {
-  console.log('-'.repeat(100));
-  const { botInfo, update } = ctx;
-  console.log({ botInfo, update });
+export const logPerformance: Handler = async ({ datasources, state }, next) => {
+  console.log(datasources.telegram);
 
+  const start = process.hrtime.bigint();
   await next();
-}
+  const elapsed = (process.hrtime.bigint() - start) /// BigInt(1000000);
+  console.log("Handlers take time", elapsed.toString(), "ns.");
+  console.log({ state });
+  console.log('-'.repeat(100));
+};

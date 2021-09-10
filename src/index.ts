@@ -1,23 +1,18 @@
-import { Telegraf } from 'telegraf';
-import { authorization } from './middleware/authorization';
-import { datasources } from './middleware/datasources';
-import { routing } from './middleware/routing';
-import { welcome } from './middleware/welcome';
-import { log } from './middleware/log';
-import dotenv from 'dotenv';
+import './utils/dotenv';
+import compose from "koa-compose";
+import { createDatasources } from "./datasources";
+import { telegram } from "./datasources/telegram";
+import { handlers } from "./handlers";
+import { logPerformance } from "./middleware/log";
+import { state } from "./middleware/state";
+import { Context } from "./types";
 
-dotenv.config();
+const middlewares = [logPerformance, state];
 
-const bot = new Telegraf(process.env.TELEGRAM_TOKEN);
+telegram(process.env.TELEGRAM_TOKEN, async (ctx) => {
+  const datasources = createDatasources(ctx);
+  const context: Context = { datasources, state: {} };
 
-bot.start(welcome);
-
-bot.use(log);
-bot.use(datasources);
-bot.use(authorization);
-bot.use(routing);
-
-bot.launch();
-
-process.once('SIGINT', () => bot.stop('SIGINT'));
-process.once('SIGTERM', () => bot.stop('SIGTERM'));
+  const composed = compose([...middlewares, handlers]);
+  composed(context);
+});
