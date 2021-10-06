@@ -16,4 +16,4 @@ echo 'TELEGRAM_TOKEN=123:abc' > ./.env
 yarn build && yarn start
 ```
 
-Create database (you can do it via docker-compose up)
+Create database (you can do it via docker-compose up).
